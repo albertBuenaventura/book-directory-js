@@ -9,13 +9,14 @@ export type Breadcrumb = {
 export type BreadcrumbsProps = {
   paths: Breadcrumb[];
   onClick?: (breadcrumb: Breadcrumb) => void;
+  className?: string;
 };
 
-export function Breadcrumbs({ paths, onClick }: BreadcrumbsProps) {
+export function Breadcrumbs({ paths, onClick, className }: BreadcrumbsProps) {
   const lastIndex = useMemo(() => paths.length - 1, [paths]);
 
   return (
-    <div className="bg-white p-2 flex">
+    <div className={cx("bg-white p-2 rounded flex flex-wrap", className)}>
       {paths.map((path, i) => {
         const isLast = lastIndex === i;
 
