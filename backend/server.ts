@@ -1,7 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from "cors";
-import db from "./app/models";
 
 dotenv.config();
 
@@ -12,14 +11,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
 app.use(express.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-
-db.sync();
 
 // require("./app/routes/turorial.routes")(app);
 
