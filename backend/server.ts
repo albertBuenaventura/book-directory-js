@@ -1,6 +1,7 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import cors from "cors";
+import { initDb } from './app/infra/setup-database';
 
 dotenv.config();
 
@@ -14,9 +15,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// require("./app/routes/turorial.routes")(app);
+initDb();
 
-// set port, listen for requests
 const PORT = 8083
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
