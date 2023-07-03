@@ -8,8 +8,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export enum FileType {
-  Book,
-  Location,
+  Book = 'book',
+  Location = 'location',
 }
 
 export type File = {

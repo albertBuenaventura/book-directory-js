@@ -1,9 +1,9 @@
 export default {
-  HOST: process.env.DB_HOST,
-  USER: process.env.DB_USER,
-  PASSWORD: process.env.DB_PASSWORD,
-  DB: process.env.DB_NAME,
-  port: process.env.DB_PORT as unknown as number,
+  HOST: process.env.DB_HOST ?? 'localhost',
+  USER: process.env.DB_USER ?? 'user',
+  PASSWORD: process.env.DB_PASSWORD ?? '123456',
+  DB: process.env.DB_NAME ?? 'books',
+  port: process.env.DB_PORT as unknown as number ?? 3306,
   dialect: "mysql",
   pool: {
     max: 5,
