@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { store, list, listChildren, deleteBook } from '../../controllers/BooksController';
+import { store, list, listChildren, deleteBook, update } from '../../controllers/BooksController';
 import storeValidator from './validators/books/store';
 import validatorMiddleware from './validators/validator.middleware';
 
@@ -9,8 +9,7 @@ booksRouter.get('/', list);
 
 booksRouter.get('/children/:id', listChildren)
 
-booksRouter.put('/:id', () => {
-})
+booksRouter.put('/:id', update)
 
 booksRouter.delete('/:id', deleteBook)
 
