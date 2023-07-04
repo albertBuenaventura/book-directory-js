@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import { Breadcrumbs } from "./components/Breadcrumbs";
 import { Button } from "./components/Button";
-import { Directory, FileType } from "./containers/Directory/Directory";
+import { Directory, File, FileType } from "./containers/Directory/Directory";
 import { AddModal } from "./components/Modals/AddModal";
 import { addBook } from "./api/books";
 
@@ -23,17 +23,22 @@ const breadcrumbs = [
 ];
 
 function App() {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
+
   const [showAddBookModal, setShowAddBookModal] = useState(false); 
   const [showAddLocationModal, setShowAddLocationModal] = useState(false); 
   const [currentFileId, setCurrentFileId] = useState<number>();
 
   const onSubmitAdd = useCallback(async(name: string, type: FileType) => {
     await addBook(name, type, currentFileId);
-    queryClient.invalidateQueries('books');
+    await queryClient.invalidateQueries(['books', currentFileId]);
 
     setShowAddBookModal(false);
     setShowAddLocationModal(false);
+  }, [currentFileId]);
+
+  const onFolderClick = useCallback((file: File) => {
+    setCurrentFileId(file.id);
   }, []);
 
   return (
@@ -49,7 +54,7 @@ function App() {
             Add Location
           </Button>
         </div>
-        <Directory id={currentFileId}/>
+        <Directory id={currentFileId} onFolderClick={onFolderClick}/>
       </div>
     </div>
       <AddModal show={showAddBookModal} onSubmit={(name: string) => onSubmitAdd(name, FileType.Book)} onClose={() => setShowAddBookModal(false)}/>

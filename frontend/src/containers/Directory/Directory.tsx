@@ -14,7 +14,7 @@ export enum FileType {
 }
 
 export type File = {
-  id: string;
+  id: number;
   name: string;
   type: FileType;
 };
