@@ -5,3 +5,7 @@ export const create = async (payload: BookInput): Promise<BookOutput> => {
 
     return book
 }
+
+export const list = async (): Promise<BookOutput[]> => {
+    return Book.findAll({paranoid: true});
+}

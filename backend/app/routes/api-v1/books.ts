@@ -1,12 +1,11 @@
 import { Router } from 'express'
-import { store } from '../../controllers/BooksController';
+import { store, list } from '../../controllers/BooksController';
 import storeValidator from './validators/books/store';
 import validatorMiddleware from './validators/validator.middleware';
 
 const booksRouter = Router();
 
-booksRouter.get('/', (req, res) => {
-})
+booksRouter.get('/', list);
 
 booksRouter.get('/:slug', () => {
 })
