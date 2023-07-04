@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', routes);
 
-const PORT = 8083
+const PORT = 8081
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
