@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { store, list } from '../../controllers/BooksController';
+import { store, list, listChildren } from '../../controllers/BooksController';
 import storeValidator from './validators/books/store';
 import validatorMiddleware from './validators/validator.middleware';
 
@@ -7,8 +7,7 @@ const booksRouter = Router();
 
 booksRouter.get('/', list);
 
-booksRouter.get('/:slug', () => {
-})
+booksRouter.get('/children/:id', listChildren)
 
 booksRouter.put('/:id', () => {
 })
