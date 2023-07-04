@@ -6,16 +6,16 @@ import {BreadcrumbsProps, Breadcrumbs} from ".";
 const defaultArgs: BreadcrumbsProps = {
   paths: [
     {
-      key: "uuid-1",
-      text: "Cabinet A"
+      id: 1,
+      name: "Cabinet A"
     },
     {
-      key: "uuid-2",
-      text: "Shelf 1"
+      id: 2,
+      name: "Shelf 1"
     },
     {
-      key: "uuid-3",
-      text: "Folder 123"
+      id: 3,
+      name: "Folder 123"
     }
   ]
 };

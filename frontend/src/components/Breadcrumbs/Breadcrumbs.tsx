@@ -1,27 +1,32 @@
 import React, { useMemo } from "react";
 import cx from "classnames";
-
-export type Breadcrumb = {
-  key: string;
-  text: string;
-};
+import { File } from "../../containers/Directory/Directory";
 
 export type BreadcrumbsProps = {
-  paths: Breadcrumb[];
-  onClick?: (breadcrumb: Breadcrumb) => void;
+  paths: Pick<File, 'id'|'name'>[];
+  onClick?: (breadcrumb: Pick<File, 'id'|'name'>) => void;
   className?: string;
 };
 
 export function Breadcrumbs({ paths, onClick, className }: BreadcrumbsProps) {
-  const lastIndex = useMemo(() => paths.length - 1, [paths]);
+  const lastIndex = paths.length - 1;
 
   return (
     <div className={cx("bg-white p-2 rounded flex flex-wrap", className)}>
+      <div className="flex">
+            <div
+              // onClick={() => onClick?.(path)}
+              role="button"
+            >
+              Home
+            </div>
+            <div className="px-2"> &gt; </div>
+          </div>
       {paths.map((path, i) => {
         const isLast = lastIndex === i;
 
         return (
-          <div key={path.key} className="flex">
+          <div key={path.id} className="flex">
             <div
               onClick={() => onClick?.(path)}
               className={cx({
@@ -29,7 +34,7 @@ export function Breadcrumbs({ paths, onClick, className }: BreadcrumbsProps) {
               })}
               role="button"
             >
-              {path.text}
+              {path.name}
             </div>
             {!isLast && <div className="px-2"> &gt; </div>}
           </div>

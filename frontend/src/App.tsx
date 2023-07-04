@@ -7,21 +7,6 @@ import { Directory, File, FileType } from "./containers/Directory/Directory";
 import { AddModal } from "./components/Modals/AddModal";
 import { addBook, deleteBook } from "./api/books";
 
-const breadcrumbs = [
-  {
-    key: "uuid-1",
-    text: "Cabinet A",
-  },
-  {
-    key: "uuid-2",
-    text: "Shelf 1",
-  },
-  {
-    key: "uuid-3",
-    text: "Folder 123",
-  },
-];
-
 function App() {
   const [queryClient] = useState(() => new QueryClient());
 
@@ -43,7 +28,7 @@ function App() {
 
     directories.push(file);
     setDirectories(directories);
-  }, []);
+  }, [directories]);
 
   const onDeleteFile = useCallback(async (file: File) => {
     await deleteBook(file.id);
@@ -58,12 +43,19 @@ function App() {
     setCurrentFileId(lastDirectory?.id ?? undefined);
   }, [directories]);
 
+  const onBreadCrumbClick = useCallback((file: Pick<File, 'id'|'name'>) => {
+    const index = directories.findIndex((directory) => directory.id === file.id);
+    setDirectories(directories.splice(0, index + 1));
+
+    setCurrentFileId(file.id);
+  }, [directories]);
+
   return (
     <QueryClientProvider client={queryClient}>
     <div className="flex flex-col w-full h-full mt-10 justify-center items-center gap-y-8">
       <div className="flex flex-col gap-y-8 bg-slate-200 p-6 w-11/12 max-w-7xl rounded">
         <div className="flex w-full items-center gap-x-4">
-          <Breadcrumbs paths={breadcrumbs} className="w-full" />
+          <Breadcrumbs paths={directories} className="w-full" onClick={onBreadCrumbClick}/>
           <Button onClick={() => setShowAddBookModal(true)} className="whitespace-nowrap">
             Add Book
           </Button>
