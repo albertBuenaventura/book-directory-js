@@ -1,4 +1,4 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model, Optional } from 'sequelize'
 import { sqlConnection } from '../infra/setup-database';
 
 export enum FileType {
@@ -16,7 +16,11 @@ interface BookAttributes {
     deletedAt?: Date;
 }
 
-class Book extends Model  implements BookAttributes {
+
+export interface BookInput extends Optional<BookAttributes, 'id'|'parent'> {}
+
+export interface BookOutput extends Required<BookAttributes> {}
+class Book extends Model<BookAttributes, BookInput>  implements BookAttributes {
     public id!: number
     public name!: string
     public type!: FileType

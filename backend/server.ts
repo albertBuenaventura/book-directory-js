@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from "cors";
 import initTables from './app/infra/setup-tables';
 import { initDb } from './app/infra/setup-database';
+import routes from './app/routes/api-v1';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/api/v1', routes);
 
 const PORT = 8083
 app.listen(PORT, () => {
