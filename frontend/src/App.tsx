@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import { Breadcrumbs } from "./components/Breadcrumbs";
 import { Button } from "./components/Button";
-import { Directory, FileType } from "./containers/Directory/Directory";
+import { Directory } from "./containers/Directory/Directory";
 
 const breadcrumbs = [
   {
@@ -19,24 +20,14 @@ const breadcrumbs = [
   },
 ];
 
-const files = [
-  {
-    id: "test",
-    name: "File",
-    type: FileType.Book,
-  },
-  {
-    id: "111",
-    name: "Cabinet",
-    type: FileType.Location,
-  },
-];
-
 function App() {
+  const queryClient = new QueryClient();
+
   const addBook = useCallback(() => {}, []);
   const addLocation = useCallback(() => {}, []);
 
   return (
+    <QueryClientProvider client={queryClient}>
     <div className="flex flex-col w-full h-full mt-10 justify-center items-center gap-y-8">
       <div className="flex flex-col gap-y-8 bg-slate-200 p-6 w-11/12 max-w-7xl rounded">
         <div className="flex w-full items-center gap-x-4">
@@ -48,9 +39,11 @@ function App() {
             Add Location
           </Button>
         </div>
-        <Directory files={files} />
+        <Directory/>
       </div>
     </div>
+    </QueryClientProvider>
+
   );
 }
 

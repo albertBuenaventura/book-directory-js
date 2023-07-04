@@ -8,7 +8,7 @@ const booksRouter = Router();
 
 booksRouter.get('/', list);
 
-booksRouter.get('/children/:id', listChildren)
+booksRouter.get('/:id', listChildren)
 
 booksRouter.put('/:id', updateValidator, validatorMiddleware, update)
 
