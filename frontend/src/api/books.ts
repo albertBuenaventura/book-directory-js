@@ -19,6 +19,12 @@ export async function addBook(name: string, type: FileType, parent?: number) {
   return res.data;
 }
 
+export async function deleteBook(id: number) {
+  const res = await axios.delete(`${api_base_url}/books/${id}`);
+
+  return res.data;
+}
+
 export async function getBooks(id?: number) {
   const res = await axios.get<GetBooksResponse>(`${api_base_url}/books/${id ?? ''}`);
 

@@ -5,7 +5,7 @@ import { Breadcrumbs } from "./components/Breadcrumbs";
 import { Button } from "./components/Button";
 import { Directory, File, FileType } from "./containers/Directory/Directory";
 import { AddModal } from "./components/Modals/AddModal";
-import { addBook } from "./api/books";
+import { addBook, deleteBook } from "./api/books";
 
 const breadcrumbs = [
   {
@@ -41,6 +41,12 @@ function App() {
     setCurrentFileId(file.id);
   }, []);
 
+  const onDeleteFile = useCallback(async (file: File) => {
+    await deleteBook(file.id);
+    await queryClient.invalidateQueries(['books', currentFileId]);
+
+  }, [currentFileId])
+
   return (
     <QueryClientProvider client={queryClient}>
     <div className="flex flex-col w-full h-full mt-10 justify-center items-center gap-y-8">
@@ -54,7 +60,7 @@ function App() {
             Add Location
           </Button>
         </div>
-        <Directory id={currentFileId} onFolderClick={onFolderClick}/>
+        <Directory id={currentFileId} onFolderClick={onFolderClick} onFileDelete={onDeleteFile}/>
       </div>
     </div>
       <AddModal show={showAddBookModal} onSubmit={(name: string) => onSubmitAdd(name, FileType.Book)} onClose={() => setShowAddBookModal(false)}/>
