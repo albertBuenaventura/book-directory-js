@@ -17,7 +17,12 @@ const styles = {
     }
 }
 export function AddModal({ show = false, onSubmit, onClose}: AddModalProps) {
-    const [field, setField] = useState<string>();
+    const [field, setField] = useState<string>('');
+
+    const handleSubmit = () => {
+        onSubmit(field);
+        setField('');
+    }
 
     return (
         <Modal style={styles} isOpen={show} onRequestClose={onClose}>
@@ -25,7 +30,7 @@ export function AddModal({ show = false, onSubmit, onClose}: AddModalProps) {
                 setField(ev.target.value)
               }
               required/>
-              <Button onClick={() => onSubmit(field!)} disabled={!field}>Add</Button>
+              <Button onClick={handleSubmit} disabled={!field}>Add</Button>
         </Modal>
     )
 }
