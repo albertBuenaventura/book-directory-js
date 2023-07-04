@@ -43,11 +43,16 @@ function App() {
     setCurrentFileId(lastDirectory?.id ?? undefined);
   }, [directories]);
 
-  const onBreadCrumbClick = useCallback((file: Pick<File, 'id'|'name'>) => {
-    const index = directories.findIndex((directory) => directory.id === file.id);
-    setDirectories(directories.splice(0, index + 1));
+  const onBreadCrumbClick = useCallback((file?: Pick<File, 'id'|'name'>) => {
+    if(file) {
+      const index = directories.findIndex((directory) => directory.id === file.id);
+      setDirectories(directories.splice(0, index + 1));
 
-    setCurrentFileId(file.id);
+      setCurrentFileId(file.id);
+    } else {
+      setDirectories([]);
+      setCurrentFileId(undefined);
+    }
   }, [directories]);
 
   return (

@@ -4,7 +4,7 @@ import { File } from "../../containers/Directory/Directory";
 
 export type BreadcrumbsProps = {
   paths: Pick<File, 'id'|'name'>[];
-  onClick?: (breadcrumb: Pick<File, 'id'|'name'>) => void;
+  onClick?: (breadcrumb?: Pick<File, 'id'|'name'>) => void;
   className?: string;
 };
 
@@ -15,7 +15,7 @@ export function Breadcrumbs({ paths, onClick, className }: BreadcrumbsProps) {
     <div className={cx("bg-white p-2 rounded flex flex-wrap", className)}>
       <div className="flex">
             <div
-              // onClick={() => onClick?.(path)}
+              onClick={() => onClick?.()}
               role="button"
             >
               Home
