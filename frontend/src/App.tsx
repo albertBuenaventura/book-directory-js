@@ -28,6 +28,7 @@ function App() {
   const [showAddBookModal, setShowAddBookModal] = useState(false); 
   const [showAddLocationModal, setShowAddLocationModal] = useState(false); 
   const [currentFileId, setCurrentFileId] = useState<number>();
+  const [directories, setDirectories] = useState<File[]>([]);
 
   const onSubmitAdd = useCallback(async(name: string, type: FileType) => {
     await addBook(name, type, currentFileId);
@@ -39,13 +40,23 @@ function App() {
 
   const onFolderClick = useCallback((file: File) => {
     setCurrentFileId(file.id);
+
+    directories.push(file);
+    setDirectories(directories);
   }, []);
 
   const onDeleteFile = useCallback(async (file: File) => {
     await deleteBook(file.id);
     await queryClient.invalidateQueries(['books', currentFileId]);
-
   }, [currentFileId])
+
+  const onClickBack = useCallback(() => {
+    directories.pop();
+    const lastDirectory = directories[directories.length - 1];
+    
+    setDirectories(directories);
+    setCurrentFileId(lastDirectory?.id ?? undefined);
+  }, [directories]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -60,7 +71,7 @@ function App() {
             Add Location
           </Button>
         </div>
-        <Directory id={currentFileId} onFolderClick={onFolderClick} onFileDelete={onDeleteFile}/>
+        <Directory id={currentFileId} onFolderClick={onFolderClick} onFileDelete={onDeleteFile} onClickBack={onClickBack} hideBackFolder={directories.length === 0}/>
       </div>
     </div>
       <AddModal show={showAddBookModal} onSubmit={(name: string) => onSubmitAdd(name, FileType.Book)} onClose={() => setShowAddBookModal(false)}/>

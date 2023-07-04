@@ -17,6 +17,7 @@ export type File = {
   id: number;
   name: string;
   type: FileType;
+  parent?: number|null;
 };
 
 export type DirectoryProps = {
