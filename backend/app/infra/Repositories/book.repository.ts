@@ -24,3 +24,11 @@ export const listChildren = async (parent: number): Promise<BookOutput[]> => {
             paranoid: true
         });
 };
+
+export const deleteById = async (id: number): Promise<boolean> => {
+    const deletedIngredientCount = await Book.destroy({
+        where: {id}
+    })
+
+    return !!deletedIngredientCount
+}

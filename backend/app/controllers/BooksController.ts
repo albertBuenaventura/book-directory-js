@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { create as createBook, list as listBooks, listChildren as listChildrenPaths} from '../infra/Repositories/book.repository';
+import { create as createBook, deleteById, list as listBooks, listChildren as listChildrenPaths} from '../infra/Repositories/book.repository';
 
 export const list = async (req: Request, res: Response) => {
     const books = await listBooks();
@@ -14,4 +14,9 @@ export const store = async (req: Request, res: Response) => {
 export const listChildren = async (req: Request, res: Response) => {
     const books = await listChildrenPaths(req.params.id as unknown as number);
     res.json(books);
+}
+
+export const deleteBook = async (req: Request, res: Response) => {
+    const isSuccess = await deleteById(req.params.id as unknown as number);
+    res.json({ success: isSuccess});
 }
